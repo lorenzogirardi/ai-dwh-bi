@@ -240,19 +240,49 @@ Dashboard organizzata per righe, allineate alla sezione
 La telemetria OTel non contiene outcome di delivery. `scripts/import_github.sh` carica in
 ClickHouse due tabelle, aggregabili per repository e tempo:
 
-- `is_bot` (commit e PR): autore bot (`[bot]`, github-actions, dependabot, renovate); la dashboard li esclude.
 - `otel.gh_commit`: commit first-parent del **branch di default locale**, inclusi i commit
   **diretti su main**; `files/additions/deletions` da `git log --numstat`; `via_pr` (euristica:
   merge o subject `(#N)`); `ai_assisted` = trailer `Co-Authored-By: Claude`.
 - `otel.gh_pull_request`: PR via GraphQL paginato (`gh`), con review count e `ai_assisted`.
+- `is_bot` (commit e PR): autore bot (`[bot]`, github-actions, dependabot, renovate); la
+  dashboard li esclude.
 
-```bash
-./scripts/import_github.sh [percorso-repo]   # rilanciabile: tabelle ReplacingMergeTree
-```
+Nessun titolo, messaggio o nome autore viene salvato (l'autore serve solo a calcolare `is_bot`).
 
-Nessun titolo, autore o messaggio viene salvato. Lo script legge il branch locale: fai `git pull`/commit
-prima di rilanciarlo. Un commit AI senza trailer risulta manuale. Correlazione con la telemetria:
-solo grezza (tempo/repo), non causale.
+#### Guida: lanciare l'import
+
+Si lancia a mano, un repo alla volta, sempre da questo progetto. Non parte in automatico.
+
+1. **Prerequisiti (una volta)**: stack acceso (`docker compose ps`, clickhouse *healthy*),
+   `gh auth status` loggato, `.env` presente.
+2. **Aggiorna il repo da importare** (lo script legge il `main` *locale*):
+   ```bash
+   cd ~/Storage/home/<repo> && git pull
+   ```
+3. **Lancia l'import** (argomento = percorso del repo; senza argomento importa questo):
+   ```bash
+   cd <questo-progetto>
+   ./scripts/import_github.sh ~/Storage/home/<repo>
+   ```
+   Per repo con molte PR servono alcune decine di secondi.
+4. **Controlla l'esito**: a fine esecuzione stampa le righe importate (`PR`, `commit`).
+5. **Guarda la dashboard**: riga *Outcome · GitHub*. Il default è 7 giorni: allarga l'intervallo
+   (30 giorni, 1 anno) per vedere lo storico. Il costo per repo compare solo per sessioni Claude
+   Code avviate dentro quel repo (attributi `vcs.*`).
+
+Rilanciabile quante volte vuoi: le tabelle sono `ReplacingMergeTree`, niente duplicati.
+Rilancialo dopo ogni `git pull` per avere dati aggiornati.
+
+| Sintomo | Causa probabile |
+| --- | --- |
+| `docker compose ... not running` | Stack spento: `docker compose up -d` |
+| `gh: ... not logged in` | `gh auth login` |
+| Pannelli vuoti | Intervallo troppo corto, oppure repo mai importato |
+| `PR 0` | Il repo non ha PR su GitHub |
+| Commit mancanti | `git pull` non fatto prima dell'import |
+
+Un commit AI senza trailer risulta manuale. Correlazione con la telemetria: solo grezza
+(tempo/repo), non causale.
 
 ### 6. Log e utilità
 
