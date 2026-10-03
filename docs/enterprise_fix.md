@@ -52,6 +52,6 @@ discovery o rimozione di dipendenze.
 - Persistenza/backup di ClickHouse, Grafana con SSO, dashboard e alert come codice.
 
 ## EF-4 · Altre fonti
-- GitHub/GitLab: PR aperte/mergeate, review rounds, reopen rate, revert/hotfix, change failure rate.
+- GitHub/GitLab (già in POC per un repo: `scripts/import_github.sh`, commit e PR): estendere a più repo, scheduling, PR aperte/mergeate, review rounds, reopen rate, revert/hotfix, change failure rate.
 - Survey mensile anonima (5 domande: focus, context switching, toil, qualità percepita, fiducia
   nell'output AI), solo aggregata.

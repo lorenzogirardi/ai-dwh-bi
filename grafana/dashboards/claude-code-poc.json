@@ -1,5 +1,7 @@
 {
-  "annotations": { "list": [] },
+  "annotations": {
+    "list": []
+  },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -10,8 +12,13 @@
     {
       "type": "row",
       "id": 100,
-      "title": "AI · Adozione (verificato con dati reali)",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "title": "AI · Adozione",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "panels": []
     },
     {
@@ -19,12 +26,23 @@
       "id": 1,
       "title": "Sessioni",
       "description": "Sum di claude_code.session.count. VERIFICATO: dati presenti.",
-      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 1 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -32,7 +50,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -42,9 +66,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -55,12 +89,23 @@
       "id": 2,
       "title": "Sessioni distinte",
       "description": "uniqExact su session.id. VERIFICATO: dati presenti.",
-      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 1 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -68,7 +113,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -78,9 +129,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -91,12 +152,23 @@
       "id": 3,
       "title": "Utenti distinti",
       "description": "uniqExact su user.account_uuid (identità account, non user.id anonimo). VERIFICATO: dati presenti.",
-      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 1 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -104,7 +176,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -114,9 +192,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "purple", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -126,13 +214,24 @@
       "type": "stat",
       "id": 4,
       "title": "Tempo attivo",
-      "description": "Sum di claude_code.active_time.total (secondi, esclude idle). VERIFICATO: dati presenti.",
-      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 1 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "description": "Sum di claude_code.active_time.total (secondi, esclude idle). VERIFICATO: dati presenti. Misura di attività/adozione, non di produttività: nessun ranking individuale.",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -140,7 +239,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -150,9 +255,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "blue", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
           "unit": "s",
           "decimals": 1
         },
@@ -164,12 +279,23 @@
       "id": 5,
       "title": "Sessioni nel tempo",
       "description": "VERIFICATO: dati presenti.",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
@@ -177,12 +303,22 @@
         }
       ],
       "options": {
-        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-        "tooltip": { "mode": "single", "sort": "none" }
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -193,19 +329,38 @@
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "never",
             "spanNulls": false,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -216,12 +371,23 @@
       "id": 6,
       "title": "Sessioni per start_type",
       "description": "fresh / resume / continue / agents_view. VERIFICATO: dati presenti.",
-      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 6 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -231,14 +397,40 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "sessioni" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "sessioni"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -248,12 +440,23 @@
       "id": 7,
       "title": "Tempo attivo per tipo",
       "description": "type=user (tastiera/lettura) vs type=cli (tool/risposte AI). VERIFICATO: dati presenti.",
-      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 6 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 6
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -263,15 +466,41 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "secondi" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "secondi"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
           "unit": "s",
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -279,8 +508,13 @@
     {
       "type": "row",
       "id": 101,
-      "title": "AI · Costo e token (schema verificato, dati in arrivo dopo una sessione con API riuscite)",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "title": "AI · Costo e token",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
       "panels": []
     },
     {
@@ -288,12 +522,23 @@
       "id": 8,
       "title": "Costo sessioni (USD)",
       "description": "claude_code.cost.usage. Metrica documentata da Claude Code: oggi legge 0 perché le sessioni di prova non hanno completato chiamate API.",
-      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 15 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -301,7 +546,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -311,9 +562,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "currencyUSD",
           "decimals": 4
         },
@@ -324,13 +585,24 @@
       "type": "stat",
       "id": 9,
       "title": "Token totali",
-      "description": "Sum di claude_code.token.usage (tutti i type).",
-      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 15 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "description": "Sum di claude_code.token.usage (tutti i type). Misura di attività/adozione, non di produttività: nessun ranking individuale.",
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -338,7 +610,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -348,9 +626,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "orange", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": null
+              }
+            ]
+          },
           "unit": "short",
           "decimals": 0
         },
@@ -362,12 +650,23 @@
       "id": 10,
       "title": "Costo per modello",
       "description": "Attributo model su claude_code.cost.usage.",
-      "gridPos": { "h": 5, "w": 12, "x": 12, "y": 15 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
@@ -375,12 +674,24 @@
         }
       ],
       "options": {
-        "legend": { "calcs": ["sum"], "displayMode": "table", "placement": "bottom", "showLegend": true },
-        "tooltip": { "mode": "multi", "sort": "desc" }
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -391,19 +702,38 @@
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "never",
             "spanNulls": false,
-            "stacking": { "group": "A", "mode": "normal" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "currencyUSD"
         },
         "overrides": []
@@ -414,12 +744,23 @@
       "id": 11,
       "title": "Token per tipo",
       "description": "type = input / output / cacheRead / cacheCreation (l'input esclude il prompt cache).",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 20 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
@@ -427,12 +768,24 @@
         }
       ],
       "options": {
-        "legend": { "calcs": ["sum"], "displayMode": "table", "placement": "bottom", "showLegend": true },
-        "tooltip": { "mode": "multi", "sort": "desc" }
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -443,19 +796,38 @@
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "never",
             "spanNulls": false,
-            "stacking": { "group": "A", "mode": "normal" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
@@ -466,12 +838,23 @@
       "id": 12,
       "title": "Token per tipo, modello e query_source",
       "description": "query_source = main / subagent / auxiliary: indica il tipo d'uso (sessione principale vs subagent).",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 20 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -481,14 +864,40 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "tokeni" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "tokeni"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -496,8 +905,13 @@
     {
       "type": "row",
       "id": 102,
-      "title": "AI · Output e modifiche (schema verificato, dati in arrivo)",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 28 },
+      "title": "AI · Output e modifiche",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
       "panels": []
     },
     {
@@ -505,12 +919,23 @@
       "id": 13,
       "title": "Linee aggiunte",
       "description": "claude_code.lines_of_code.count con type=added. Conta SOLO le righe scritte con gli strumenti di editing (Edit/Write/NotebookEdit): le modifiche fatte da shell (Bash/git/CI) non vengono conteggiate, quindi il valore resta 0 anche quando ci sono molti commit.",
-      "gridPos": { "h": 5, "w": 4, "x": 0, "y": 29 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 29
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -518,7 +943,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -528,9 +959,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -541,12 +982,23 @@
       "id": 14,
       "title": "Linee rimosse",
       "description": "claude_code.lines_of_code.count con type=removed. Stesso vincolo di 'Linee aggiunte': solo edit via Edit/Write/NotebookEdit, non le modifiche fatte da shell.",
-      "gridPos": { "h": 5, "w": 4, "x": 4, "y": 29 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 4,
+        "y": 29
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -554,7 +1006,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -564,9 +1022,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -577,12 +1045,23 @@
       "id": 15,
       "title": "Commit creati",
       "description": "claude_code.commit.count: solo i commit git creati da Claude Code. Escludo i commit fatti a mano e quelli del bot CI (github-actions).",
-      "gridPos": { "h": 5, "w": 4, "x": 8, "y": 29 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 8,
+        "y": 29
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -590,7 +1069,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -600,9 +1085,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -613,12 +1108,23 @@
       "id": 16,
       "title": "PR creati",
       "description": "claude_code.pull_request.count (PR/MR creati da Claude Code).",
-      "gridPos": { "h": 5, "w": 4, "x": 12, "y": 29 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 12,
+        "y": 29
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -626,7 +1132,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -636,9 +1148,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -649,12 +1171,23 @@
       "id": 17,
       "title": "Edit accettati",
       "description": "claude_code.code_edit_tool.decision con decision=accept. Solo gli strumenti Edit/Write/NotebookEdit: source=config indica auto-accept della modalità di permessi.",
-      "gridPos": { "h": 5, "w": 4, "x": 16, "y": 29 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 16,
+        "y": 29
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -662,7 +1195,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -672,9 +1211,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -685,12 +1234,23 @@
       "id": 18,
       "title": "Edit rifiutati",
       "description": "claude_code.code_edit_tool.decision con decision=reject: segnale di affidabilità dell'AI.",
-      "gridPos": { "h": 5, "w": 4, "x": 20, "y": 29 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 29
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -698,7 +1258,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -708,9 +1274,19 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -721,12 +1297,23 @@
       "id": 19,
       "title": "Editing per tool e linguaggio",
       "description": "Attributi tool_name (Edit/Write/NotebookEdit), decision, source, language. Resta vuoto se la sessione non ha usato gli strumenti di editing (es. solo Bash/Read).",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 34 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 34
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -736,14 +1323,40 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "n" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "n"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -753,12 +1366,23 @@
       "id": 20,
       "title": "Attività per repository",
       "description": "Attributi vcs.* (richiesto OTEL_METRICS_INCLUDE_REPOSITORY=true e un remote 'origin' nella cartella). Attribuzione PER SESSIONE: il repo è quello in cui la sessione è stata avviata, letto all'avvio; i lavori su altri progetti fatti dalla stessa sessione restano accreditati qui. Colonne: sessioni distinte, costo USD, commit e PR creati da Claude Code per repository.",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 34 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 34
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -768,49 +1392,585 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "costo_usd" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "costo_usd"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       }
     },
     {
       "type": "row",
-      "id": 103,
-      "title": "Eventi e qualità (verificato con dati reali)",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 42 },
+      "id": 104,
+      "title": "Outcome · GitHub (commit e PR, import con scripts/import_github.sh)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 42
+      },
       "panels": []
     },
     {
-      "type": "timeseries",
-      "id": 21,
-      "title": "Eventi nel tempo",
-      "description": "Conteggio dei record in otel_logs (Body = nome evento).",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 43 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "type": "stat",
+      "id": 30,
+      "title": "Commit su branch di default",
+      "description": "Tutti i commit first-parent del branch di default (include quelli diretti, senza PR). Fonte: git log.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 0,
+        "y": 43
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
-          "format": 0,
-          "rawSql": "SELECT\n  toStartOfInterval(Timestamp, INTERVAL $__interval_s second) AS time,\n  count() AS eventi\nFROM otel.otel_logs\nWHERE $__timeFilter(Timestamp)\nGROUP BY time\nORDER BY time"
+          "format": 1,
+          "rawSql": "SELECT count() AS commit FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at)"
         }
       ],
       "options": {
-        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": true },
-        "tooltip": { "mode": "single", "sort": "none" }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "wideLayout": true,
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 31,
+      "title": "Di cui diretti su main",
+      "description": "Commit non riconducibili a PR/merge (euristica: niente '(#N)' nel subject e non merge). Questi non compaiono nelle statistiche PR.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 4,
+        "y": 43
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 1,
+          "rawSql": "SELECT countIf(via_pr = 0) AS diretti FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at)"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "wideLayout": true,
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 32,
+      "title": "Commit AI-assisted (%)",
+      "description": "Quota di commit con trailer Co-Authored-By: Claude. Indica uso, non qualità né produttività.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 8,
+        "y": 43
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 1,
+          "rawSql": "SELECT round(100 * avg(ai_assisted), 1) AS pct_ai FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at)"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "wideLayout": true,
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 1,
+          "unit": "percent"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 33,
+      "title": "PR mergeate",
+      "description": "Fonte: gh (ultimi periodi importati). Le PR non contano il lavoro committato direttamente su main.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 12,
+        "y": 43
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 1,
+          "rawSql": "SELECT count() AS pr FROM otel.gh_pull_request FINAL WHERE merged_at IS NOT NULL AND $__timeFilter(merged_at)"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "wideLayout": true,
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 34,
+      "title": "Costo USD per commit AI-assisted",
+      "description": "Costo Claude Code nel periodo / commit AI-assisted nel periodo. Rapporto aggregato grezzo, non attribuibile causalmente.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 16,
+        "y": 43
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 1,
+          "rawSql": "SELECT (SELECT sum(Value) FROM otel.otel_metrics_sum WHERE MetricName = 'claude_code.cost.usage' AND $__timeFilter(TimeUnix)) / nullIf((SELECT count() FROM otel.gh_commit FINAL WHERE ai_assisted = 1 AND $__timeFilter(committed_at)), 0) AS usd_per_commit"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "wideLayout": true,
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 2,
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "stat",
+      "id": 35,
+      "title": "Cache hit token (%)",
+      "description": "cacheRead / (input + cacheRead + cacheCreation): efficienza del prompt caching, non produttività.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 43
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 1,
+          "rawSql": "SELECT round(100 * sumIf(Value, Attributes['type'] = 'cacheRead') / nullIf(sumIf(Value, Attributes['type'] IN ('input','cacheRead','cacheCreation')), 0), 1) AS pct_cache FROM otel.otel_metrics_sum WHERE MetricName = 'claude_code.token.usage' AND $__timeFilter(TimeUnix)"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "wideLayout": true,
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 1,
+          "unit": "percent"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "id": 36,
+      "title": "Commit nel tempo: AI-assisted vs manuali",
+      "description": "Commit giornalieri sul branch di default, divisi per trailer Co-Authored-By: Claude. Include i commit diretti su main.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 0,
+          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL 1 day) AS time,\n  countIf(ai_assisted = 1) AS commit_ai,\n  countIf(ai_assisted = 0) AS commit_manuali\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 60,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "timeseries",
+      "id": 37,
+      "title": "Adozione AI vs commit (correlazione grezza, non causale)",
+      "description": "Costo Claude Code (USD, asse sinistro) e commit totali (asse destro) per giorno. Stessa repo/periodo: serve a vedere se adozione e output si muovono insieme, NON a provare che l'una causa l'altro.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 0,
+          "rawSql": "SELECT toStartOfInterval(TimeUnix, INTERVAL 1 day) AS time, sum(Value) AS costo_usd\nFROM otel.otel_metrics_sum\nWHERE MetricName = 'claude_code.cost.usage' AND $__timeFilter(TimeUnix)\nGROUP BY time ORDER BY time"
+        },
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 0,
+          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL 1 day) AS time, count() AS commit\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -821,19 +1981,232 @@
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "never",
             "spanNulls": false,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "off" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "commit"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "bars"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 30
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "table",
+      "id": 38,
+      "title": "Outcome per repository",
+      "description": "Aggregato per repository: commit sul branch di default (diretti vs via PR, AI-assisted) e PR mergeate. Nessun dato per autore.",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 1,
+          "rawSql": "SELECT\n  c.repo AS repository,\n  c.commit AS commit,\n  c.diretti AS diretti_su_main,\n  c.ai AS commit_ai,\n  c.additions AS righe_aggiunte,\n  coalesce(p.pr_mergeate, 0) AS pr_mergeate\nFROM (\n  SELECT repo, count() AS commit, countIf(via_pr = 0) AS diretti, countIf(ai_assisted = 1) AS ai, sum(additions) AS additions\n  FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at) GROUP BY repo\n) AS c\nLEFT JOIN (\n  SELECT repo, count() AS pr_mergeate FROM otel.gh_pull_request FINAL\n  WHERE merged_at IS NOT NULL AND $__timeFilter(merged_at) GROUP BY repo\n) AS p ON p.repo = c.repo\nORDER BY commit DESC"
+        }
+      ],
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "commit"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "row",
+      "id": 103,
+      "title": "Eventi e qualità",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "panels": []
+    },
+    {
+      "type": "timeseries",
+      "id": 21,
+      "title": "Eventi nel tempo",
+      "description": "Conteggio dei record in otel_logs (Body = nome evento).",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 65
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
+          "editorType": "sql",
+          "pluginVersion": "4.22.0",
+          "format": 0,
+          "rawSql": "SELECT\n  toStartOfInterval(Timestamp, INTERVAL $__interval_s second) AS time,\n  count() AS eventi\nFROM otel.otel_logs\nWHERE $__timeFilter(Timestamp)\nGROUP BY time\nORDER BY time"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "decimals": 0
         },
         "overrides": []
@@ -844,12 +2217,23 @@
       "id": 22,
       "title": "Top eventi",
       "description": "Conteggio per nome evento (colonna Body di otel_logs).",
-      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 43 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 65
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -859,14 +2243,40 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "n" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "n"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": []
       }
@@ -876,12 +2286,23 @@
       "id": 23,
       "title": "Ultimi eventi",
       "description": "Il contenuto dei prompt non è raccolto: l'attributo prompt è <REDACTED>.",
-      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 43 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 65
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -891,19 +2312,53 @@
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
-        "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "tempo" } ]
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "tempo"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "tempo" },
-            "properties": [ { "id": "unit", "value": "dateTimeAsIso" } ]
+            "matcher": {
+              "id": "byName",
+              "options": "tempo"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeAsIso"
+              }
+            ]
           }
         ]
       }
@@ -913,12 +2368,23 @@
       "id": 24,
       "title": "Errori API",
       "description": "Eventi claude_code.api_error: richieste fallite dopo i retry interni (segnale di qualità/frizione). VERIFICATO: dati presenti.",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 51 },
-      "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 73
+      },
+      "datasource": {
+        "type": "grafana-clickhouse-datasource",
+        "uid": "clickhouse-poc"
+      },
       "targets": [
         {
           "refId": "A",
-          "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
+          "datasource": {
+            "type": "grafana-clickhouse-datasource",
+            "uid": "clickhouse-poc"
+          },
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
@@ -926,7 +2392,13 @@
         }
       ],
       "options": {
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "orientation": "auto",
         "textMode": "auto",
         "wideLayout": true,
@@ -936,11 +2408,22 @@
       },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [ { "color": "green", "value": null }, { "color": "red", "value": 1 } ]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
           },
           "decimals": 0
         },
@@ -951,24 +2434,52 @@
       "type": "text",
       "id": 25,
       "title": "Copertura del framework di misurazione",
-      "gridPos": { "h": 12, "w": 12, "x": 12, "y": 51 },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 73
+      },
       "options": {
         "mode": "markdown",
-        "code": { "language": "plaintext", "showLineNumbers": false, "showMiniMap": false },
-        "content": "### Cosa copre questa telemetria\n\n**Coperto da Claude Code OTel (questa dashboard)**\n\n- **AI · Adozione**: sessioni, utenti, `start_type`, repo (`vcs.*`)\n- **AI · Costo e token**: `cost.usage` (USD), `token.usage` per `type`/`model`/`query_source`\n- **AI · Output**: `lines_of_code.count`, `commit.count`, `pull_request.count`, `code_edit_tool.decision`\n- **Qualità (parziale)**: eventi `api_error`, tool decision/reject\n\n**Non coperto (serve Jira / GitHub / GitLab / survey)**\n\n- Delivery: cycle time per tipo/size, throughput *Done* vs cancellazioni\n- Flow: WIP per fase, aging WIP, item oltre SLE, tempo attivo/bloccato/attesa per stato\n- Product: idea → produzione\n- Quality: change failure rate, rollback, hotfix, PR reopen, review rounds, bug escape\n- Developer experience: survey mensile\n- Business: attesa per decisione/requisito\n\n**Correlazioni possibili**: join su *tempo*, *repository* (`vcs.*`) e *utente*\n(`user.account_uuid`) quando i dati di delivery arrivano in ClickHouse.\n\n> I pannelli *Costo e token* e *Output e modifiche* sono vuoti finché non esegui una\n> sessione con chiamate API riuscite: nomi metrica e attributi provengono dalla\n> documentazione ufficiale di Claude Code, la struttura delle tabelle è verificata."
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "### Cosa misura questa dashboard\n\n**Telemetria Claude Code (OTel)**: adozione (sessioni, `start_type`, repo), costo e token, output (`commit`/`pull_request` creati da Claude Code), tool decision, errori API.\n\n**Outcome da GitHub/git (riga *Outcome · GitHub*)**: commit sul branch di default, inclusi quelli **diretti su main**, e PR mergeate; flag AI-assisted dal trailer `Co-Authored-By: Claude`. Import: `scripts/import_github.sh`.\n\n**Non coperto** (vedi `docs/enterprise_fix.md`): cycle time per fase, WIP/aging, blocked time, throughput Done vs Cancelled (serve un tracker, es. Jira), review rounds/reopen, change failure rate, survey developer experience.\n\n**Come leggerla**\n- Sono aggregati per repository/tempo: nessun ranking individuale, token e linee di codice non sono proxy di produttività.\n- Adozione ↔ outcome è una **correlazione grezza, non causale**: manca la stratificazione per tipo/size di lavoro.\n- `vcs.*` è per sessione (repo di avvio). `AI-assisted` sui commit dipende dal trailer: commit AI senza trailer risultano manuali.\n- Costo/token/commit/PR sono dati reali; `lines_of_code` e `code_edit_tool.decision` restano 0 finché le modifiche passano da `Bash` anziché `Edit`/`Write`."
       },
-      "fieldConfig": { "defaults": { "mappings": [], "color": { "mode": "fixed", "fixedColor": "text" } }, "overrides": [] },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        },
+        "overrides": []
+      },
       "transparent": true
     }
   ],
   "refresh": "30s",
   "schemaVersion": 39,
-  "tags": ["claude-code", "opentelemetry", "poc", "framework"],
-  "templating": { "list": [] },
-  "time": { "from": "now-6h", "to": "now" },
+  "tags": [
+    "claude-code",
+    "opentelemetry",
+    "poc",
+    "framework"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Claude Code - Adozione, costo e output (POC)",
+  "title": "Claude Code - Adozione, costo e outcome (POC)",
   "uid": "claude-code-poc",
   "version": 2,
   "weekStart": ""

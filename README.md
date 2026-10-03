@@ -205,7 +205,7 @@ docker compose exec -T clickhouse clickhouse-client \
 4. Attendi un paio di secondi (metriche e log hanno intervallo ridotto), poi esegui
    `./scripts/discover.sh`: deve comparire `claude_code.session.count` in
    `otel_metrics_sum` e almeno l'evento `claude_code.user_prompt` in `otel_logs`.
-5. Apri Grafana: la dashboard **"Claude Code - Adozione, costo e output (POC)"**
+5. Apri Grafana: la dashboard **"Claude Code - Adozione, costo e outcome (POC)"**
    (folder *Claude Code*) deve mostrare sessioni, tempo attivo, eventi nel tempo e top
    eventi. I pannelli di costo/token/output si riempiono dopo una sessione con chiamate
    API riuscite (nell'esempio la quota era esaurita, quindi restano a 0/vuoti).
@@ -231,10 +231,29 @@ Dashboard organizzata per righe, allineate alla sezione
 | AI · Adozione | sessioni, sessioni distinte, utenti, tempo attivo, `start_type`, tempo attivo per tipo | **verificata con dati reali** |
 | AI · Costo e token | costo USD, token per `type`/`model`/`query_source` | **verificata con dati reali** |
 | AI · Output e modifiche | linee aggiunte/rimosse, commit, PR, edit accettati/rifiutati, per repository | commit/PR **verificati**; linee ed edit a 0 (servono `Edit`/`Write`) |
+| Outcome · GitHub | commit su branch di default (diretti vs via PR, AI-assisted), PR mergeate, costo per commit AI-assisted, cache hit, correlazione grezza adozione↔commit, outcome per repository | **dati reali** (import locale) |
 | Eventi e qualità | eventi nel tempo, top eventi, ultimi eventi, errori API | **verificata con dati reali** |
 | Copertura del framework | pannello testuale con cosa è/non è coperto | — |
 
-### 5. Log e utilità
+### 5. Outcome da GitHub/git (import)
+
+La telemetria OTel non contiene outcome di delivery. `scripts/import_github.sh` carica in
+ClickHouse due tabelle, aggregabili per repository e tempo:
+
+- `otel.gh_commit`: commit first-parent del **branch di default locale**, inclusi i commit
+  **diretti su main**; `files/additions/deletions` da `git log --numstat`; `via_pr` (euristica:
+  merge o subject `(#N)`); `ai_assisted` = trailer `Co-Authored-By: Claude`.
+- `otel.gh_pull_request`: PR via GraphQL paginato (`gh`), con review count e `ai_assisted`.
+
+```bash
+./scripts/import_github.sh [percorso-repo]   # rilanciabile: tabelle ReplacingMergeTree
+```
+
+Nessun titolo, autore o messaggio viene salvato. Lo script legge il branch locale: fai `git pull`/commit
+prima di rilanciarlo. Un commit AI senza trailer risulta manuale. Correlazione con la telemetria:
+solo grezza (tempo/repo), non causale.
+
+### 6. Log e utilità
 
 ```bash
 docker compose logs -f otel-collector      # log del Collector
@@ -296,6 +315,7 @@ grafana/provisioning/datasources/      # datasource ClickHouse (password da env)
 grafana/provisioning/dashboards/       # provider delle dashboard file-based
 grafana/dashboards/claude-code-poc.json# dashboard provisionata
 scripts/discover.sh                    # scoperta schema/dati in ClickHouse
+scripts/import_github.sh               # import commit/PR in ClickHouse (outcome)
 docs/enterprise_fix.md                 # proposte per il rollout enterprise (Jira, privacy, hardening)
 ```
 
