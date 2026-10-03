@@ -240,6 +240,7 @@ Dashboard organizzata per righe, allineate alla sezione
 La telemetria OTel non contiene outcome di delivery. `scripts/import_github.sh` carica in
 ClickHouse due tabelle, aggregabili per repository e tempo:
 
+- `is_bot` (commit e PR): autore bot (`[bot]`, github-actions, dependabot, renovate); la dashboard li esclude.
 - `otel.gh_commit`: commit first-parent del **branch di default locale**, inclusi i commit
   **diretti su main**; `files/additions/deletions` da `git log --numstat`; `via_pr` (euristica:
   merge o subject `(#N)`); `ai_assisted` = trailer `Co-Authored-By: Claude`.

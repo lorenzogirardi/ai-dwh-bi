@@ -1446,7 +1446,7 @@
       "type": "stat",
       "id": 30,
       "title": "Commit su branch di default",
-      "description": "Tutti i commit first-parent del branch di default (include quelli diretti, senza PR). Fonte: git log.",
+      "description": "Tutti i commit first-parent del branch di default (include quelli diretti, senza PR). Fonte: git log. Esclusi i commit di bot (github-actions, dependabot…).",
       "gridPos": {
         "h": 5,
         "w": 4,
@@ -1467,7 +1467,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT count() AS commit FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at)"
+          "rawSql": "SELECT count() AS commit FROM otel.gh_commit FINAL WHERE is_bot = 0 AND $__timeFilter(committed_at)"
         }
       ],
       "options": {
@@ -1530,7 +1530,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT countIf(via_pr = 0) AS diretti FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at)"
+          "rawSql": "SELECT countIf(via_pr = 0) AS diretti FROM otel.gh_commit FINAL WHERE is_bot = 0 AND $__timeFilter(committed_at)"
         }
       ],
       "options": {
@@ -1593,7 +1593,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT round(100 * avg(ai_assisted), 1) AS pct_ai FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at)"
+          "rawSql": "SELECT round(100 * avg(ai_assisted), 1) AS pct_ai FROM otel.gh_commit FINAL WHERE is_bot = 0 AND $__timeFilter(committed_at)"
         }
       ],
       "options": {
@@ -1657,7 +1657,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT count() AS pr FROM otel.gh_pull_request FINAL WHERE merged_at IS NOT NULL AND $__timeFilter(merged_at)"
+          "rawSql": "SELECT count() AS pr FROM otel.gh_pull_request FINAL WHERE is_bot = 0 AND merged_at IS NOT NULL AND $__timeFilter(merged_at)"
         }
       ],
       "options": {
@@ -1720,7 +1720,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT (SELECT sum(Value) FROM otel.otel_metrics_sum WHERE MetricName = 'claude_code.cost.usage'\n  AND Attributes['vcs.repository.name'] IN (SELECT splitByChar('/', repo)[2] FROM otel.gh_commit FINAL) AND $__timeFilter(TimeUnix))\n  / nullIf((SELECT count() FROM otel.gh_commit FINAL WHERE ai_assisted = 1 AND $__timeFilter(committed_at)), 0) AS usd_per_commit"
+          "rawSql": "SELECT (SELECT sum(Value) FROM otel.otel_metrics_sum WHERE MetricName = 'claude_code.cost.usage'\n  AND Attributes['vcs.repository.name'] IN (SELECT splitByChar('/', repo)[2] FROM otel.gh_commit FINAL) AND $__timeFilter(TimeUnix))\n  / nullIf((SELECT count() FROM otel.gh_commit FINAL WHERE is_bot = 0 AND ai_assisted = 1 AND $__timeFilter(committed_at)), 0) AS usd_per_commit"
         }
       ],
       "options": {
@@ -1848,7 +1848,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
-          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL $__interval_s second) AS time,\n  countIf(ai_assisted = 1) AS commit_ai,\n  countIf(ai_assisted = 0) AS commit_manuali\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
+          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL $__interval_s second) AS time,\n  countIf(ai_assisted = 1) AS commit_ai,\n  countIf(ai_assisted = 0) AS commit_manuali\nFROM otel.gh_commit FINAL\nWHERE is_bot = 0 AND $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
         }
       ],
       "options": {
@@ -1951,7 +1951,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
-          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL $__interval_s second) AS time, count() AS commit\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
+          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL $__interval_s second) AS time, count() AS commit\nFROM otel.gh_commit FINAL\nWHERE is_bot = 0 AND $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
         }
       ],
       "options": {
@@ -2068,7 +2068,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT\n  c.repo AS repository,\n  c.commit AS commit,\n  c.diretti AS diretti_su_main,\n  c.ai AS commit_ai,\n  c.additions AS righe_aggiunte,\n  coalesce(p.pr_mergeate, 0) AS pr_mergeate,\n  coalesce(o.costo_usd, 0) AS costo_ai_usd,\n  coalesce(o.sessioni, 0) AS sessioni_ai\nFROM (\n  SELECT repo, splitByChar('/', repo)[2] AS short, count() AS commit, countIf(via_pr = 0) AS diretti, countIf(ai_assisted = 1) AS ai, sum(additions) AS additions\n  FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at) GROUP BY repo\n) AS c\nLEFT JOIN (\n  SELECT repo, count() AS pr_mergeate FROM otel.gh_pull_request FINAL\n  WHERE merged_at IS NOT NULL AND $__timeFilter(merged_at) GROUP BY repo\n) AS p ON p.repo = c.repo\nLEFT JOIN (\n  SELECT Attributes['vcs.repository.name'] AS short, sumIf(Value, MetricName = 'claude_code.cost.usage') AS costo_usd,\n    uniqExactIf(Attributes['session.id'], MetricName = 'claude_code.session.count') AS sessioni\n  FROM otel.otel_metrics_sum WHERE $__timeFilter(TimeUnix) AND short != '' GROUP BY short\n) AS o ON o.short = c.short\nORDER BY commit DESC"
+          "rawSql": "SELECT\n  c.repo AS repository,\n  c.commit AS commit,\n  c.diretti AS diretti_su_main,\n  c.ai AS commit_ai,\n  c.additions AS righe_aggiunte,\n  coalesce(p.pr_mergeate, 0) AS pr_mergeate,\n  coalesce(o.costo_usd, 0) AS costo_ai_usd,\n  coalesce(o.sessioni, 0) AS sessioni_ai\nFROM (\n  SELECT repo, splitByChar('/', repo)[2] AS short, count() AS commit, countIf(via_pr = 0) AS diretti, countIf(ai_assisted = 1) AS ai, sum(additions) AS additions\n  FROM otel.gh_commit FINAL WHERE is_bot = 0 AND $__timeFilter(committed_at) GROUP BY repo\n) AS c\nLEFT JOIN (\n  SELECT repo, count() AS pr_mergeate FROM otel.gh_pull_request FINAL\n  WHERE is_bot = 0 AND merged_at IS NOT NULL AND $__timeFilter(merged_at) GROUP BY repo\n) AS p ON p.repo = c.repo\nLEFT JOIN (\n  SELECT Attributes['vcs.repository.name'] AS short, sumIf(Value, MetricName = 'claude_code.cost.usage') AS costo_usd,\n    uniqExactIf(Attributes['session.id'], MetricName = 'claude_code.session.count') AS sessioni\n  FROM otel.otel_metrics_sum WHERE $__timeFilter(TimeUnix) AND short != '' GROUP BY short\n) AS o ON o.short = c.short\nORDER BY commit DESC"
         }
       ],
       "options": {
