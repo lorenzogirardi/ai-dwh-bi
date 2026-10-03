@@ -1,4 +1,4 @@
-# OpenTelemetry Collector - contrib 0.162.0
+# OpenTelemetry Collector - contrib 0.161.0
 # Schema validato con: otelcol-contrib validate --config <file>
 #
 # Segnali in ingresso: metrics e logs (eventi) da Claude Code.
@@ -16,6 +16,12 @@ receivers:
       http:
         endpoint: 0.0.0.0:4318
 
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 512
+    spike_limit_mib: 128
+
 exporters:
   clickhouse:
     endpoint: tcp://clickhouse:9000
@@ -24,8 +30,8 @@ exporters:
     password: ${env:CLICKHOUSE_PASSWORD}
     # Creazione automatica di database/tabelle: supportata (create_schema, default true)
     create_schema: true
-    # Retention breve per il test: opzione documentata "ttl" (es. 30m, 48h); 0 = nessuna TTL
-    ttl: 48h
+    # Retention 90 giorni (2160h): copre un pilot di 8-12 settimane. Opzione "ttl"; 0 = nessuna TTL
+    ttl: 2160h
     timeout: 5s
     logs_table_name: otel_logs
     metrics_tables:
@@ -55,7 +61,9 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
+      processors: [memory_limiter]
       exporters: [clickhouse]
     logs:
       receivers: [otlp]
+      processors: [memory_limiter]
       exporters: [clickhouse]

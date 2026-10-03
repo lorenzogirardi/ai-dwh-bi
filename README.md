@@ -117,7 +117,7 @@ claude
 
 Chiudi la sessione con `exit`/`Ctrl-D` e le variabili spariscono dalla shell.
 
-Variante alternativa su sola metriche/log via HTTP/protobuf (se preferisci la4318):
+Variante alternativa su sola metriche/log via HTTP/protobuf (se preferisci la 4318):
 
 ```bash
 export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
@@ -147,19 +147,20 @@ non contiene cicli di vita degli item, WIP, review o survey.
 | --- | --- | --- | --- |
 | AI | Adozione (sessioni, utenti, start_type, repo) | `claude_code.session.count` + attributi `session.id`, `user.account_uuid`, `start_type`, `vcs.*` | **verificato con dati reali** |
 | AI | Tempo attivo (utente vs CLI) | `claude_code.active_time.total` (`type=user\|cli`) | **verificato con dati reali** |
-| AI | Costo | `claude_code.cost.usage` (USD, `model`, `query_source`) | schema verificato, **dati in arrivo** |
-| AI | Token e tipo d'uso | `claude_code.token.usage` (`type=input\|output\|cacheRead\|cacheCreation`, `model`, `query_source`) | schema verificato, **dati in arrivo** |
-| AI | Output/modifiche | `claude_code.lines_of_code.count` (`type=added\|removed`), `claude_code.commit.count`, `claude_code.pull_request.count` | schema verificato, **dati in arrivo** |
-| AI | Decisioni di editing | `claude_code.code_edit_tool.decision` (`tool_name`, `decision`, `source`, `language`) | schema verificato, **dati in arrivo** |
-| AI | Tool call | eventi `tool_result` / `tool_decision` in `otel_logs` | solo **conteggi**: i nomi dei tool richiedono `OTEL_LOG_TOOL_DETAILS=1`, qui disattivato per la privacy |
+| AI | Costo | `claude_code.cost.usage` (USD, `model`, `query_source`) | **verificato con dati reali** |
+| AI | Token e tipo d'uso | `claude_code.token.usage` (`type=input\|output\|cacheRead\|cacheCreation`, `model`, `query_source`) | **verificato con dati reali** |
+| AI | Output/modifiche | `claude_code.lines_of_code.count` (`type=added\|removed`), `claude_code.commit.count`, `claude_code.pull_request.count` | `commit` e `pull_request` **verificati**; `lines_of_code` ancora 0 (serve edit via `Edit`/`Write`, vedi Limitazioni) |
+| AI | Decisioni di editing | `claude_code.code_edit_tool.decision` (`tool_name`, `decision`, `source`, `language`) | mai emesso finora: nelle sessioni osservate gli edit passano da `Bash` |
+| AI | Tool call | eventi `tool_result` / `tool_decision` in `otel_logs` | i nomi dei tool built-in sono visibili (`Bash`, `Read`, `ToolSearch`); nomi MCP/skill/agent risultano `custom`/`third-party` senza `OTEL_LOG_TOOL_DETAILS=1` |
 | Quality (parziale) | errori API | evento `claude_code.api_error` | **verificato con dati reali** |
 | Delivery / Flow / Product / Business / Survey | cycle time, WIP, aging, PR reopen, hotfix, survey, attesa decisioni | Jira / GitHub / GitLab / survey | **non coperti**: non li esporta Claude Code, servono altre fonti in ClickHouse |
 
 Correlazione "adozione AI ↔ outcome": i join possibili sono **tempo**, **repository**
 (`OTEL_METRICS_INCLUDE_REPOSITORY=true` → attributi `vcs.repository.name`, `vcs.owner.name`,
 `vcs.provider.name`) e **utente** (`user.account_uuid`). Attenzione: i `vcs.*` vengono emessi
-solo se la cartella di lavoro ha un remote `origin` url-shaped (questa cartella del POC non ne
-ha, quindi quegli attributi non compaiono qui).
+solo se la cartella di lavoro ha un remote `origin` url-shaped **al momento di avviare la
+sessione** (questa cartella lo ha dal push del repo; le sessioni aperte prima non li
+acquisiscono).
 
 ## Verifica dei dati
 
@@ -228,8 +229,8 @@ Dashboard organizzata per righe, allineate alla sezione
 | Riga | Contenuto | Stato |
 | --- | --- | --- |
 | AI · Adozione | sessioni, sessioni distinte, utenti, tempo attivo, `start_type`, tempo attivo per tipo | **verificata con dati reali** |
-| AI · Costo e token | costo USD, token per `type`/`model`/`query_source` | query testate, **dati in arrivo** |
-| AI · Output e modifiche | linee aggiunte/rimosse, commit, PR, edit accettati/rifiutati, per repository | query testate, **dati in arrivo** |
+| AI · Costo e token | costo USD, token per `type`/`model`/`query_source` | **verificata con dati reali** |
+| AI · Output e modifiche | linee aggiunte/rimosse, commit, PR, edit accettati/rifiutati, per repository | commit/PR **verificati**; linee ed edit a 0 (servono `Edit`/`Write`) |
 | Eventi e qualità | eventi nel tempo, top eventi, ultimi eventi, errori API | **verificata con dati reali** |
 | Copertura del framework | pannello testuale con cosa è/non è coperto | — |
 
@@ -295,12 +296,19 @@ grafana/provisioning/datasources/      # datasource ClickHouse (password da env)
 grafana/provisioning/dashboards/       # provider delle dashboard file-based
 grafana/dashboards/claude-code-poc.json# dashboard provisionata
 scripts/discover.sh                    # scoperta schema/dati in ClickHouse
+docs/enterprise_fix.md                 # proposte per il rollout enterprise (Jira, privacy, hardening)
 ```
+
+## Oltre il POC
+
+Jira, flow, identità e hardening non sono coperti: vedi [`docs/enterprise_fix.md`](docs/enterprise_fix.md).
 
 ## Limitazioni note
 
-- **Retention**: `ttl: 48h` nel clickhouse exporter (opzione documentata `ttl`); le tabelle
-  create dall'exporter acquisiscono la TTL. Per un test è più che sufficiente.
+- **Retention**: `ttl: 2160h` (90 giorni) nel clickhouse exporter. L'exporter applica la TTL solo
+  alla *creazione* delle tabelle: per tabelle già esistenti usa
+  `ALTER TABLE otel.<tabella> MODIFY TTL toDateTime(TimeUnix) + toIntervalDay(90)`
+  (`Timestamp` per `otel_logs`).
 - **Schema**: `create_schema: true` (supportato dalla versione usata): database `otel` e
   tabelle `otel_logs`, `otel_metrics_sum`, `otel_metrics_gauge` … creati automaticamente.
 - **Traces**: non configurati: Claude Code esporta span solo con
@@ -308,14 +316,21 @@ scripts/discover.sh                    # scoperta schema/dati in ClickHouse
 - **Healthcheck del Collector**: l'immagine contrib è distroless (niente shell né wget),
   quindi non è possibile un `HEALTHCHECK` Docker interno: si usa l'estensione
   `health_check` sulla 13133, verificabile dall'host.
-- **Metriche cost/token/output**: `claude_code.cost.usage`, `claude_code.token.usage`,
-  `claude_code.lines_of_code.count`, `claude_code.commit.count`,
-  `claude_code.pull_request.count` e `claude_code.code_edit_tool.decision` compaiono in
-  `otel_metrics_sum` solo dopo sessioni con chiamate API/strumenti riusciti. In questo test
-  le sessioni di prova hanno ricevuto un errore di quota, quindi **quei pannelli sono nella
-  dashboard ma vuoti**: nomi metrica e attributi provengono dalla documentazione ufficiale
-  Claude Code e la struttura delle tabelle è verificata; il primo dato reale li riempie
-  senza modifiche.
+- **Metriche costo/token**: `claude_code.cost.usage`, `claude_code.token.usage`,
+  `claude_code.commit.count` e `claude_code.pull_request.count` sono state verificate con
+  dati reali (arrivano dopo le prime chiamate API riuscite). `claude_code.lines_of_code.count`
+  e `claude_code.code_edit_tool.decision` restano a 0 finché la sessione non usa gli
+  strumenti di editing.
+- **Linee di codice ≠ commit**: `lines_of_code.count` conta solo le righe scritte con
+  `Edit`/`Write`/`NotebookEdit`; le modifiche fatte da shell (git, script, CI) non vengono
+  conteggiate, quindi "Linee aggiunte/rimosse" può restare 0 anche con molti commit.
+  `commit.count` conta solo i commit creati da Claude Code (non quelli manuali o del bot CI).
+- **Attribuzione `vcs.*` per sessione**: Claude Code legge l'`origin` **una volta all'avvio
+  della sessione** e applica quegli attributi a tutte le metriche/eventi di quella sessione.
+  Lavori su altri progetti fatti dalla stessa sessione restano accreditati al repo di
+  partenza: per attribuzioni corrette, una sessione per progetto (con `cd` nella root).
+- **Fusi orari**: ClickHouse lavora in **UTC** (`now()` è UTC): gli orari mostrati da
+  `discover.sh` e dai pannelli tabellari sono UTC, non locale (CEST = UTC+2).
 - **Colonna `EventName`**: negli `otel_logs` il nome evento è nella colonna `Body`
   (es. `claude_code.user_prompt`) e in `LogAttributes['event.name']`; la colonna `EventName`
   è vuota con questa combinazione di versioni. Le query della dashboard usano `Body`.

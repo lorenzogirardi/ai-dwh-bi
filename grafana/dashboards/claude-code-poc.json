@@ -100,7 +100,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT uniqExact(Attributes['user.account_uuid']) AS utenti\nFROM otel.otel_metrics_sum\nWHERE MetricName = 'claude_code.session.count'\n  AND $__timeFilter(TimeUnix)"
+          "rawSql": "SELECT uniqExact(coalesce(nullIf(Attributes['user.account_uuid'], ''), Attributes['user.id'])) AS utenti\nFROM otel.otel_metrics_sum\nWHERE MetricName = 'claude_code.session.count'\n  AND $__timeFilter(TimeUnix)"
         }
       ],
       "options": {
@@ -504,7 +504,7 @@
       "type": "stat",
       "id": 13,
       "title": "Linee aggiunte",
-      "description": "claude_code.lines_of_code.count con type=added.",
+      "description": "claude_code.lines_of_code.count con type=added. Conta SOLO le righe scritte con gli strumenti di editing (Edit/Write/NotebookEdit): le modifiche fatte da shell (Bash/git/CI) non vengono conteggiate, quindi il valore resta 0 anche quando ci sono molti commit.",
       "gridPos": { "h": 5, "w": 4, "x": 0, "y": 29 },
       "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
       "targets": [
@@ -540,7 +540,7 @@
       "type": "stat",
       "id": 14,
       "title": "Linee rimosse",
-      "description": "claude_code.lines_of_code.count con type=removed.",
+      "description": "claude_code.lines_of_code.count con type=removed. Stesso vincolo di 'Linee aggiunte': solo edit via Edit/Write/NotebookEdit, non le modifiche fatte da shell.",
       "gridPos": { "h": 5, "w": 4, "x": 4, "y": 29 },
       "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
       "targets": [
@@ -576,7 +576,7 @@
       "type": "stat",
       "id": 15,
       "title": "Commit creati",
-      "description": "claude_code.commit.count.",
+      "description": "claude_code.commit.count: solo i commit git creati da Claude Code. Escludo i commit fatti a mano e quelli del bot CI (github-actions).",
       "gridPos": { "h": 5, "w": 4, "x": 8, "y": 29 },
       "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
       "targets": [
@@ -648,7 +648,7 @@
       "type": "stat",
       "id": 17,
       "title": "Edit accettati",
-      "description": "claude_code.code_edit_tool.decision con decision=accept.",
+      "description": "claude_code.code_edit_tool.decision con decision=accept. Solo gli strumenti Edit/Write/NotebookEdit: source=config indica auto-accept della modalità di permessi.",
       "gridPos": { "h": 5, "w": 4, "x": 16, "y": 29 },
       "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
       "targets": [
@@ -720,7 +720,7 @@
       "type": "table",
       "id": 19,
       "title": "Editing per tool e linguaggio",
-      "description": "Attributi tool_name (Edit/Write/NotebookEdit), decision, source, language.",
+      "description": "Attributi tool_name (Edit/Write/NotebookEdit), decision, source, language. Resta vuoto se la sessione non ha usato gli strumenti di editing (es. solo Bash/Read).",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 34 },
       "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
       "targets": [
@@ -752,7 +752,7 @@
       "type": "table",
       "id": 20,
       "title": "Attività per repository",
-      "description": "Attributi vcs.* (richiesto OTEL_METRICS_INCLUDE_REPOSITORY=true e un remote 'origin' nella cartella).",
+      "description": "Attributi vcs.* (richiesto OTEL_METRICS_INCLUDE_REPOSITORY=true e un remote 'origin' nella cartella). Attribuzione PER SESSIONE: il repo è quello in cui la sessione è stata avviata, letto all'avvio; i lavori su altri progetti fatti dalla stessa sessione restano accreditati qui. Colonne: sessioni distinte, costo USD, commit e PR creati da Claude Code per repository.",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 34 },
       "datasource": { "type": "grafana-clickhouse-datasource", "uid": "clickhouse-poc" },
       "targets": [
@@ -762,14 +762,14 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT\n  Attributes['vcs.repository.name'] AS repository,\n  Attributes['vcs.owner.name'] AS owner,\n  count() AS punti_metrica\nFROM otel.otel_metrics_sum\nWHERE Attributes['vcs.repository.name'] != ''\n  AND $__timeFilter(TimeUnix)\nGROUP BY repository, owner\nORDER BY punti_metrica DESC"
+          "rawSql": "SELECT\n  Attributes['vcs.repository.name'] AS repository,\n  Attributes['vcs.owner.name'] AS owner,\n  uniqExactIf(Attributes['session.id'], MetricName = 'claude_code.session.count') AS sessioni,\n  sumIf(Value, MetricName = 'claude_code.cost.usage') AS costo_usd,\n  sumIf(Value, MetricName = 'claude_code.commit.count') AS commit,\n  sumIf(Value, MetricName = 'claude_code.pull_request.count') AS pr\nFROM otel.otel_metrics_sum\nWHERE Attributes['vcs.repository.name'] != ''\n  AND $__timeFilter(TimeUnix)\nGROUP BY repository, owner\nORDER BY costo_usd DESC"
         }
       ],
       "options": {
         "showHeader": true,
         "cellHeight": "sm",
         "footer": { "show": false, "reducer": ["sum"], "countRows": false, "fields": "" },
-        "sortBy": [ { "desc": true, "displayName": "punti_metrica" } ]
+        "sortBy": [ { "desc": true, "displayName": "costo_usd" } ]
       },
       "fieldConfig": {
         "defaults": {
