@@ -1,0 +1,61 @@
+# OpenTelemetry Collector - contrib 0.162.0
+# Schema validato con: otelcol-contrib validate --config <file>
+#
+# Segnali in ingresso: metrics e logs (eventi) da Claude Code.
+# Nessuna pipeline traces: Claude Code non esporta span senza CLAUDE_CODE_ENHANCED_TELEMETRY_BETA=1.
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  clickhouse:
+    endpoint: tcp://clickhouse:9000
+    database: otel
+    username: ${env:CLICKHOUSE_USER}
+    password: ${env:CLICKHOUSE_PASSWORD}
+    # Creazione automatica di database/tabelle: supportata (create_schema, default true)
+    create_schema: true
+    # Retention breve per il test: opzione documentata "ttl" (es. 30m, 48h); 0 = nessuna TTL
+    ttl: 48h
+    timeout: 5s
+    logs_table_name: otel_logs
+    metrics_tables:
+      sum:
+        name: otel_metrics_sum
+      gauge:
+        name: otel_metrics_gauge
+    # Batching interno all'exporter come da raccomandazione del README
+    # (sostituisce il processor batch standalone)
+    sending_queue:
+      enabled: true
+      num_consumers: 4
+      batch:
+        min_size: 100
+        flush_timeout: 5s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
+service:
+  extensions: [health_check]
+  telemetry:
+    logs:
+      level: info
+  pipelines:
+    metrics:
+      receivers: [otlp]
+      exporters: [clickhouse]
+    logs:
+      receivers: [otlp]
+      exporters: [clickhouse]

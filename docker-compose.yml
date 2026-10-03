@@ -1,0 +1,79 @@
+# Proof of concept locale: Claude Code (host) -> OTel Collector -> ClickHouse -> Grafana
+# Tutte le immagini sono versionate (niente "latest").
+
+name: claude-code-otel-poc
+
+services:
+  # OpenTelemetry Collector (distribuzione contrib, contiene l'exporter clickhouse)
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.161.0
+    container_name: otel-collector
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./config/otel-collector.yaml:/etc/otelcol-contrib/config.yaml:ro
+    environment:
+      # Usate dal config del Collector via ${env:...}
+      CLICKHOUSE_USER: "${CLICKHOUSE_USER:?definisci CLICKHOUSE_USER in .env}"
+      CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD:?definisci CLICKHOUSE_PASSWORD in .env}"
+    ports:
+      # Solo loopback: Claude Code gira sullo stesso host
+      - "127.0.0.1:4317:4317"   # OTLP gRPC
+      - "127.0.0.1:4318:4318"   # OTLP HTTP/protobuf
+      - "127.0.0.1:13133:13133" # healthcheck extension (GET /)
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Nessuna porta pubblicata: raggiungibile solo dalla network Compose
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.10.7.6
+    container_name: clickhouse
+    environment:
+      CLICKHOUSE_USER: "${CLICKHOUSE_USER:?definisci CLICKHOUSE_USER in .env}"
+      CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD:?definisci CLICKHOUSE_PASSWORD in .env}"
+      CLICKHOUSE_DB: "${CLICKHOUSE_DB:-otel}"
+    volumes:
+      - clickhouse-data:/var/lib/clickhouse
+    healthcheck:
+      test: ["CMD-SHELL", "clickhouse-client --user \"$$CLICKHOUSE_USER\" --password \"$$CLICKHOUSE_PASSWORD\" --query 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:13.2.3
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_ADMIN_USER:?definisci GRAFANA_ADMIN_USER in .env}"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_ADMIN_PASSWORD:?definisci GRAFANA_ADMIN_PASSWORD in .env}"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      # Installazione sincrona del plugin datasource ClickHouse prima dell'avvio
+      GF_PLUGINS_PREINSTALL_SYNC: "grafana-clickhouse-datasource@4.22.0"
+      # Usate dal provisioning del datasource (interpolazione $VAR supportata da Grafana)
+      CLICKHOUSE_USER: "${CLICKHOUSE_USER:?definisci CLICKHOUSE_USER in .env}"
+      CLICKHOUSE_PASSWORD: "${CLICKHOUSE_PASSWORD:?definisci CLICKHOUSE_PASSWORD in .env}"
+      CLICKHOUSE_DB: "${CLICKHOUSE_DB:-otel}"
+    ports:
+      # Default 3000; sovrascrivibile con GRAFANA_HOST_PORT in .env se occupata
+      - "127.0.0.1:${GRAFANA_HOST_PORT:-3000}:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/api/health >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 90s
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  clickhouse-data:
+  grafana-data:

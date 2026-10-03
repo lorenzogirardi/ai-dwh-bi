@@ -1,0 +1,20 @@
+# Datasource ClickHouse provisionato (nessuna password nel file: usata l'interpolazione
+# delle variabili d'ambiente supportata dal provisioning di Grafana).
+apiVersion: 1
+
+datasources:
+  - name: ClickHouse
+    uid: clickhouse-poc
+    type: grafana-clickhouse-datasource
+    isDefault: true
+    editable: false
+    jsonData:
+      host: clickhouse
+      port: 9000
+      protocol: native
+      secure: false
+      username: $CLICKHOUSE_USER
+      defaultDatabase: $CLICKHOUSE_DB
+      configMode: classic
+    secureJsonData:
+      password: $CLICKHOUSE_PASSWORD

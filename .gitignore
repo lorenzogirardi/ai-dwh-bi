@@ -1,0 +1,6 @@
+# Segreti locali: mai committare
+.env
+
+# Dati generati durante i test
+data/
+*.log
