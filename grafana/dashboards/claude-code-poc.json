@@ -1699,7 +1699,7 @@
       "type": "stat",
       "id": 34,
       "title": "Costo USD per commit AI-assisted",
-      "description": "Costo Claude Code nel periodo / commit AI-assisted nel periodo. Rapporto aggregato grezzo, non attribuibile causalmente.",
+      "description": "Costo Claude Code nel periodo, SOLO delle sessioni attribuite a repository presenti in gh_commit (esclude sessioni senza vcs.* o su altri repo), diviso i commit AI-assisted nel periodo. Rapporto aggregato grezzo, non attribuibile causalmente.",
       "gridPos": {
         "h": 5,
         "w": 4,
@@ -1720,7 +1720,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT (SELECT sum(Value) FROM otel.otel_metrics_sum WHERE MetricName = 'claude_code.cost.usage' AND $__timeFilter(TimeUnix)) / nullIf((SELECT count() FROM otel.gh_commit FINAL WHERE ai_assisted = 1 AND $__timeFilter(committed_at)), 0) AS usd_per_commit"
+          "rawSql": "SELECT (SELECT sum(Value) FROM otel.otel_metrics_sum WHERE MetricName = 'claude_code.cost.usage'\n  AND Attributes['vcs.repository.name'] IN (SELECT splitByChar('/', repo)[2] FROM otel.gh_commit FINAL) AND $__timeFilter(TimeUnix))\n  / nullIf((SELECT count() FROM otel.gh_commit FINAL WHERE ai_assisted = 1 AND $__timeFilter(committed_at)), 0) AS usd_per_commit"
         }
       ],
       "options": {
@@ -1827,7 +1827,7 @@
       "type": "timeseries",
       "id": 36,
       "title": "Commit nel tempo: AI-assisted vs manuali",
-      "description": "Commit giornalieri sul branch di default, divisi per trailer Co-Authored-By: Claude. Include i commit diretti su main.",
+      "description": "Commit per intervallo sul branch di default, divisi per trailer Co-Authored-By: Claude. Include i commit diretti su main.",
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -1848,7 +1848,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
-          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL 1 day) AS time,\n  countIf(ai_assisted = 1) AS commit_ai,\n  countIf(ai_assisted = 0) AS commit_manuali\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
+          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL $__interval_s second) AS time,\n  countIf(ai_assisted = 1) AS commit_ai,\n  countIf(ai_assisted = 0) AS commit_manuali\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
         }
       ],
       "options": {
@@ -1886,11 +1886,11 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 7,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "always",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1919,7 +1919,7 @@
       "type": "timeseries",
       "id": 37,
       "title": "Adozione AI vs commit (correlazione grezza, non causale)",
-      "description": "Costo Claude Code (USD, asse sinistro) e commit totali (asse destro) per giorno. Stessa repo/periodo: serve a vedere se adozione e output si muovono insieme, NON a provare che l'una causa l'altro.",
+      "description": "Costo Claude Code (USD, asse sinistro, solo sessioni dei repo importati in gh_commit) e commit totali (asse destro) per intervallo. Serve a vedere se adozione e output si muovono insieme, NON a provare che l'una causi l'altro.",
       "gridPos": {
         "h": 8,
         "w": 12,
@@ -1940,7 +1940,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
-          "rawSql": "SELECT toStartOfInterval(TimeUnix, INTERVAL 1 day) AS time, sum(Value) AS costo_usd\nFROM otel.otel_metrics_sum\nWHERE MetricName = 'claude_code.cost.usage' AND $__timeFilter(TimeUnix)\nGROUP BY time ORDER BY time"
+          "rawSql": "SELECT toStartOfInterval(TimeUnix, INTERVAL $__interval_s second) AS time, sum(Value) AS costo_usd\nFROM otel.otel_metrics_sum\nWHERE MetricName = 'claude_code.cost.usage' AND Attributes['vcs.repository.name'] IN (SELECT splitByChar('/', repo)[2] FROM otel.gh_commit FINAL) AND $__timeFilter(TimeUnix)\nGROUP BY time ORDER BY time"
         },
         {
           "refId": "B",
@@ -1951,7 +1951,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 0,
-          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL 1 day) AS time, count() AS commit\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
+          "rawSql": "SELECT toStartOfInterval(committed_at, INTERVAL $__interval_s second) AS time, count() AS commit\nFROM otel.gh_commit FINAL\nWHERE $__timeFilter(committed_at)\nGROUP BY time ORDER BY time"
         }
       ],
       "options": {
@@ -1989,11 +1989,11 @@
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 7,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "always",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -2033,6 +2033,10 @@
               {
                 "id": "custom.fillOpacity",
                 "value": 30
+              },
+              {
+                "id": "custom.showPoints",
+                "value": "never"
               }
             ]
           }
@@ -2043,7 +2047,7 @@
       "type": "table",
       "id": 38,
       "title": "Outcome per repository",
-      "description": "Aggregato per repository: commit sul branch di default (diretti vs via PR, AI-assisted) e PR mergeate. Nessun dato per autore.",
+      "description": "Aggregato per repository: commit sul branch di default (diretti vs via PR, AI-assisted), PR mergeate, e costo/sessioni Claude Code agganciati per nome del repo (vcs.repository.name = parte dopo '/'). Nessun dato per autore.",
       "gridPos": {
         "h": 8,
         "w": 24,
@@ -2064,7 +2068,7 @@
           "editorType": "sql",
           "pluginVersion": "4.22.0",
           "format": 1,
-          "rawSql": "SELECT\n  c.repo AS repository,\n  c.commit AS commit,\n  c.diretti AS diretti_su_main,\n  c.ai AS commit_ai,\n  c.additions AS righe_aggiunte,\n  coalesce(p.pr_mergeate, 0) AS pr_mergeate\nFROM (\n  SELECT repo, count() AS commit, countIf(via_pr = 0) AS diretti, countIf(ai_assisted = 1) AS ai, sum(additions) AS additions\n  FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at) GROUP BY repo\n) AS c\nLEFT JOIN (\n  SELECT repo, count() AS pr_mergeate FROM otel.gh_pull_request FINAL\n  WHERE merged_at IS NOT NULL AND $__timeFilter(merged_at) GROUP BY repo\n) AS p ON p.repo = c.repo\nORDER BY commit DESC"
+          "rawSql": "SELECT\n  c.repo AS repository,\n  c.commit AS commit,\n  c.diretti AS diretti_su_main,\n  c.ai AS commit_ai,\n  c.additions AS righe_aggiunte,\n  coalesce(p.pr_mergeate, 0) AS pr_mergeate,\n  coalesce(o.costo_usd, 0) AS costo_ai_usd,\n  coalesce(o.sessioni, 0) AS sessioni_ai\nFROM (\n  SELECT repo, splitByChar('/', repo)[2] AS short, count() AS commit, countIf(via_pr = 0) AS diretti, countIf(ai_assisted = 1) AS ai, sum(additions) AS additions\n  FROM otel.gh_commit FINAL WHERE $__timeFilter(committed_at) GROUP BY repo\n) AS c\nLEFT JOIN (\n  SELECT repo, count() AS pr_mergeate FROM otel.gh_pull_request FINAL\n  WHERE merged_at IS NOT NULL AND $__timeFilter(merged_at) GROUP BY repo\n) AS p ON p.repo = c.repo\nLEFT JOIN (\n  SELECT Attributes['vcs.repository.name'] AS short, sumIf(Value, MetricName = 'claude_code.cost.usage') AS costo_usd,\n    uniqExactIf(Attributes['session.id'], MetricName = 'claude_code.session.count') AS sessioni\n  FROM otel.otel_metrics_sum WHERE $__timeFilter(TimeUnix) AND short != '' GROUP BY short\n) AS o ON o.short = c.short\nORDER BY commit DESC"
         }
       ],
       "options": {
